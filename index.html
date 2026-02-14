@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Surprise for You ❤️</title>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Kristi&display=swap" rel="stylesheet">
+
+  <!-- Image Preloading for a smoother experience -->
+  <link rel="preload" as="image" href="./images/image1.gif">
+  <link rel="preload" as="image" href="./images/image2.gif">
+  <link rel="preload" as="image" href="./images/image3.gif">
+  <link rel="preload" as="image" href="./images/image4.gif">
+  <link rel="preload" as="image" href="./images/image5.gif">
+  <link rel="preload" as="image" href="./images/image6.gif">
+  <link rel="preload" as="image" href="./images/image7.gif">
+
+  <style>
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-handwriting { font-family: 'Kristi', cursive; }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: linear-gradient(-45deg, #f8cdda, #e73c7e, #b490ca, #89cff0);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+    
+    .letter { background: #fffaf0; border: 1px solid #f2d7d5; padding: 2rem 3rem; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); line-height: 2; }
+    .memories-container { display: flex; overflow-x: auto; padding: 20px; gap: 20px; scrollbar-width: none; }
+    .memories-container::-webkit-scrollbar { display: none; }
+    
+    .polaroid { background: white; padding: 15px 15px 30px 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; flex-shrink: 0; }
+    .polaroid:hover { transform: scale(1.05) rotate(3deg); }
+    .polaroid img { width: 250px; height: 250px; object-fit: cover; }
+    .polaroid p { margin-top: 15px; text-align: center; font-size: 1.5rem; }
+    
+    #surpriseHeart { animation: pulse 2s infinite; cursor: pointer; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    
+    #surpriseModal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; animation: fadeIn 0.5s; }
+    #modalContent { background: linear-gradient(135deg, #fffaf0, #ffdde1); color: #5d4954; padding: 40px; border-radius: 20px; max-width: 500px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    #closeModal { position: absolute; top: 15px; right: 25px; color: #aaa; font-size: 38px; font-weight: bold; cursor: pointer; }
+
+    #yesButton { transition: all 0.3s ease; }
+    .insistent-pulse { animation: insistent-pulse 1s ease-in-out infinite; }
+    @keyframes insistent-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <div id="proposalSection" class="flex flex-col items-center justify-center min-h-screen p-4 text-center">
+    <div class="bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8 flex flex-col items-center" style="min-height: 500px; width: 90%; max-width: 500px;">
+        <img id="imageDisplay" src="./images/image1.gif" alt="Cute gif" class="rounded-lg h-[250px] object-cover mx-auto mb-4 transition-opacity duration-500"/>
+        <h1 class="text-4xl md:text-5xl font-display font-bold text-pink-700 my-4 h-20">
+            <span id="typing-effect"></span>
+        </h1>
+        <div id="responseButtons" class="flex justify-center gap-4 mt-auto w-full">
+            <button id="yesButton" class="rounded-lg text-lg font-medium px-6 py-3 bg-green-500 text-white shadow-lg">Yes!</button>
+            <button id="noButton" class="rounded-lg text-lg font-medium px-6 py-3 bg-red-500 text-white shadow-lg">No</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- The Revealed Content (Letter, Memories, Music, Surprise) -->
+  <main id="mainContent" class="opacity-0 pointer-events-none max-w-4xl mx-auto p-6 space-y-20 my-10 transition-opacity duration-1000">
+    <section class="text-center bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8">
+      <h2 class="font-display text-5xl text-pink-700 mb-8">A Letter For You</h2>
+      <div class="letter font-display text-lg text-left">
+        <p class="font-handwriting text-5xl mb-6">My Dearest Heeero,</p>
+        <p>Thank you for always being there for me, for understanding me without explanations, and for caring the way you do. You are not just a good friend, you are an amazing human being. May you always stay as kind and positive as you are.</p>
+        <p class="mt-8 font-handwriting text-5xl text-right">Forever and always,<br>[one of your dosttt]</p>
+      </div>
+    </section>
+    <section class="bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8">
+      <h2 class="font-display text-5xl text-pink-700 mb-8 text-center">Our Cherished Memories</h2>
+      <div class="memories-container">
+        <!-- TODO: Replace these images and captions -->
+        <div class="polaroid"><img src="./images/img7.jpg" alt="Memory 1"><p class="font-handwriting">crazyyy starting...</p></div>
+        <div class="polaroid"><img src="./images/img6.jpg" alt="Memory 2"><p class="font-handwriting">One of the best Photo</p></div>
+        <div class="polaroid"><img src="./images/img3.jpg" alt="Memory 3"><p class="font-handwriting">Natural Bonding</p></div>
+        <div class="polaroid"><img src="./images/img2.jpg" alt="Memory 4"><p class="font-handwriting">bit more closure</p></div>
+        <div class="polaroid"><img src="./images/img1.jpg" alt="Memory 5"><p class="font-handwriting">Unforgettable NIGHT</p></div>
+      </div>
+    </section>
+    <section class="text-center bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8">
+      <h2 class="font-display text-5xl text-pink-700 mb-8">Our Soundtrack</h2>
+      <p class="mb-8 text-lg font-display">A dedicated playlist only for you...</p>
+      <!-- TODO: Paste your Spotify playlist link here -->
+      <a href="https://open.spotify.com/playlist/30hn7z2ZsjFraDlIivIwYy?si=ZRuEoINmSXOfj4vuWbVUkA&pi=hA7EDDSGSLCNI" target="_blank" class="inline-block bg-pink-600 text-white font-bold text-xl py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-110">Listen to Our Soundtrack 🎵</a>
+    </section>
+    <section class="text-center bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8">
+      <h2 class="font-display text-5xl text-pink-700 mb-8">One Last Surprise...</h2>
+      <p class="mb-8 text-lg font-display">Click the heart below.</p>
+      <div id="surpriseHeart" class="w-24 h-24 mx-auto"><svg xmlns="http://www.w.org/2000/svg" viewBox="0 0 24 24" fill="#ff1493"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+    </section>
+  </main>
+  <div id="surpriseModal"><div id="modalContent"><span id="closeModal">&times;</span><h2 class="font-handwriting text-6xl text-pink-700 mb-4">My Promise</h2><!-- TODO: Write your final message --><p class="font-display text-xl">I promise to always be there for you whenever you need someone to listen, to support, or just to sit quietly with you. I’ll always protect this friendship and treat you with the same care and understanding you’ve shown me.</p></div></div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const imageDisplay = document.getElementById('imageDisplay');
+        const proposalSection = document.getElementById('proposalSection');
+        const mainContent = document.getElementById('mainContent');
+        const surpriseHeart = document.getElementById('surpriseHeart');
+        const modal = document.getElementById('surpriseModal');
+        const closeModal = document.getElementById('closeModal');
+        const responseButtons = document.getElementById('responseButtons');
+
+        const IMAGE_PATHS = {
+            no: ['./images/image2.gif', './images/image3.gif', './images/image4.gif', './images/image5.gif', './images/image6.gif'],
+            yes: './images/image7.gif'
+        };
+        const NO_MESSAGES = ["Are you sure?", "Really sure?", "Please don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."];
+        let noClickCount = 0;
+        let yesButtonScale = 1;
+
+        new Typed('#typing-effect', { strings: ["My Dearest...", "I have a very important question...", "Will you be my Valentine forever?"], typeSpeed: 50, backSpeed: 25, backDelay: 1000, loop: false });
+
+        noButton.addEventListener('click', handleNoClick);
+        yesButton.addEventListener('click', handleYesClick);
+
+        function handleNoClick() {
+            // Change GIF and text
+            changeImage(IMAGE_PATHS.no[noClickCount % IMAGE_PATHS.no.length]);
+            noButton.textContent = NO_MESSAGES[noClickCount % NO_MESSAGES.length];
+            noClickCount++;
+
+            // Grow the Yes button
+            yesButtonScale += 0.5;
+            yesButton.style.transform = `scale(${yesButtonScale})`;
+            
+            // After 2 clicks, the "No" button gives up
+            if (noClickCount > 1) {
+                noButton.style.display = 'none';
+                responseButtons.style.justifyContent = 'center';
+                yesButton.textContent = 'Okay, this is the only option now :)';
+                yesButton.classList.add('insistent-pulse');
+            }
+        }
+
+        function handleYesClick() {
+            changeImage(IMAGE_PATHS.yes);
+            document.getElementById('typing-effect').parentElement.innerHTML = "I Love You So Much! ❤️";
+            responseButtons.style.display = 'none';
+            launchConfetti();
+            
+            setTimeout(() => {
+                proposalSection.style.opacity = '0';
+                proposalSection.style.pointerEvents = 'none';
+                mainContent.style.opacity = '1';
+                mainContent.style.pointerEvents = 'auto';
+                setTimeout(() => document.getElementById('letterSection').scrollIntoView(), 500);
+            }, 1500);
+        }
+
+        surpriseHeart.onclick = () => { modal.style.display = "flex"; }
+        closeModal.onclick = () => { modal.style.display = "none"; }
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+
+        function changeImage(src) {
+            imageDisplay.style.opacity = '0';
+            setTimeout(() => { imageDisplay.src = src; imageDisplay.style.opacity = '1'; }, 500);
+        }
+
+        function launchConfetti() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const heart = confetti.shapeFromPath({ path: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'});
+            (function frame() {
+                if (Date.now() > animationEnd) return;
+                confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, shapes: [heart], colors: ['#ff69b4', '#ff1493', '#ffc0cb'] });
+                confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, shapes: [heart], colors: ['#ff69b4', '#ff1493', '#ffc0cb'] });
+                requestAnimationFrame(frame);
+            }());
+        }
+    });
+  </script>
+</body>
+</html>
